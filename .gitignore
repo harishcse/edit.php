@@ -1,0 +1,344 @@
+account page 
+<?php  session_start();
+$ses = $_SESSION['user_id'];
+ ?>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link  rel="stylesheet" href="animate.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<title></title>
+
+<style type="text/css">
+
+	.nav .navbar-nav-custom, ul,li
+	{
+		padding: 5px;
+	float: left;
+	}
+	.pull-right {
+		margin-right: 55px;
+  float: right !important;
+}
+ul	{
+	
+	color:pink;
+
+	}
+	.navbar
+	{
+		margin-bottom: 0px;
+	}
+.panel-footer
+{	margin-top: 140px;
+	text-align: center;
+	font-size: 25px;
+}
+ul li ul li 
+{
+	display:none;
+}
+	ul li:hover ul li 
+	{
+		display: block;
+	}   
+
+	li{
+
+		color:#5bc0de;
+	} 
+	li a{
+		text-decoration: none;
+	}
+	i
+	{
+		float:right;
+	}
+
+{
+    
+    vertical-align: middle
+	}
+	.form-group
+	{
+
+	}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<nav class="navbar navbar-default ">
+<ul class="nav navbar-nav-custom">
+
+<li> <h4>	NEW PROJECT</h4></li>
+</ul>
+<ul class="nav navbar-nav-custom pull-right">
+
+<li  ><img src="images/<?php echo $_SESSION['image'];?>" class="img-circle" style="width:40px;height:40px;"></li>
+
+<li><?php echo $_SESSION['name'];?></li>
+<li>
+<ul class="caret">
+<li>
+<a href="signout.php">signout</a></li>
+
+<li> <a href="create.php">create</a></li>
+</ul>
+</li>
+
+
+</ul>
+</nav>	
+<div>
+<ul class=" nav nav-pills nav-justified " >
+  <li role="presentation" ><a href="#">Home</a></li>
+  <li role="presentation"><a href="#">My-Uploads</a></li>
+  <li role="presentation"><a href="#">Account</a></li>
+</ul>
+</div>
+
+
+<?php 
+$dbhost ="localhost";
+$dbuser="root";
+$dbpass="";
+$con= mysql_connect($dbhost, $dbuser,$dbpass);
+if (! $con) {
+	die('could not connect' . mysql_error());
+}
+//echo "connected successfully";
+
+$db = mysql_select_db('hari');
+
+$res= mysql_query("SELECT * FROM ph WHERE id='{$ses}'");
+
+$var =array();
+
+$revar =mysql_num_rows($res);
+
+$row = mysql_fetch_assoc($res);
+$images =$row['image'];
+$name=$row['name'];
+$email=$row['email'];
+$password =$row['password'];
+$mobile=$row['num'];
+    
+?>
+
+
+
+    <form class="form-horizontal" role="form">
+
+
+		<div class="form-group">
+    	<label for="inputtitle" class="col-sm-5 control-label">images</label>
+    	<div class="col-sm-3">
+    	<img src="images/<?php echo $images;?>" alt="avatar" class="widget-image img-circle  animation-fadeIn"style="width:100px;height:100px;">
+
+        </div>
+        </div>
+
+        <div class="form-group">
+    	<label for="inputtitle" class="col-sm-5 control-label">name</label>
+    	<div class="col-sm-3">
+    		<?php echo $name;?>
+        </div>
+        </div>
+
+
+        	 <div class="form-group">
+    	<label for="inputtitle" class="col-sm-5 control-label">email</label>
+    	<div class="col-sm-3">
+    		<?php echo $email;?>
+        </div>
+        </div>
+
+         <div class="form-group">
+    	<label for="inputtitle" class="col-sm-5 control-label">password</label>
+    	<div class="col-sm-3">
+    		<?php echo $password;?>
+        </div>
+        </div>
+
+        <div class="form-group">
+    	<label for="inputtitle" class="col-sm-5 control-label">mobile </label>
+    	<div class="col-sm-3">
+    		<?php echo $mobile;?>
+        </div>
+        </div>
+            <div class="form-group">
+        	<label for="inputtitle" class="col-sm-4 control-label">  </label>
+        	<div class="col-sm-3">
+        	<button type="button" class="btn btn-primary"> <a href="edit.php?id=<?php echo $row['id'];?>">Edit Form</a> </button> 
+        	
+            </div>
+            </div>
+        </form>
+
+ 
+  
+	 <div class="panel-footer"> footer</div>
+</div>
+
+</body>
+</html>
+
+
+
+edit page
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link  rel="stylesheet" href="animate.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<title></title>
+</head>
+<body>
+
+<?php 
+
+session_start();
+$sesid=$_SESSION['user_id'];
+
+
+
+$dbhost ="localhost";
+$dbuser="root";
+$dbpass="";
+$con= mysql_connect($dbhost, $dbuser,$dbpass);
+if (! $con) {
+	die('could not connect' . mysql_error());
+}
+//echo "connected successfully";
+
+$db = mysql_select_db('hari');
+
+$res= mysql_query("SELECT * FROM ph WHERE id='{$sesid}'");
+
+$var =array();
+
+$revar =mysql_num_rows($res);
+
+$row = mysql_fetch_assoc($res);
+$images =$row['image'];
+$name=$row['name'];
+$email=$row['email'];
+$password =$row['password'];
+$mobile=$row['num'];
+
+
+
+if (isset($_POST['sub'])) {
+
+$name=$_POST['name'];
+$email=$_POST['email'];
+$password=$_POST['password'];
+$mobile=$_POST['mobile'];
+
+
+	
+	$image_name= $_FILES['images']['name'];
+	$iamge_type=$_FILES['images']['type'];
+	$image_size=$_FILES['images']['size'];
+
+	$image_tmp_name=$_FILES['images']['tmp_name'];
+
+	if($image_name=='')
+	 {
+		echo "<script>alert ('please select the image')</script>";
+	 }
+	 else{
+		move_uploaded_file($image_tmp_name,"images/$image_name");
+	  echo "<div class = 'suc_msg'>image upload success fully</div>";
+			 }
+		
+$sql="UPDATE ph SET image='$image_name', name='$name', email='$email', password='$password', num='$mobile' WHERE id='{$sesid}'" ;
+mysql_query($sql);
+header("location:acount.php");
+
+}
+
+ ?>
+<form class="form-horizontal" action="" method="post" enctype="multipart/form-data"role="form">
+
+
+		<div class="form-group">
+    	<label for="inputtitle" class="col-sm-5 control-label">images</label>
+    	<div class="col-sm-3">
+
+    	<img src="images/<?php echo $images;?>"alt="avatar" class="widget-image img-circle  animation-fadeIn"style="width:100px;height:100px;" >
+		<input type="file" name="images" id="inputtitle">
+        </div>
+        </div>
+
+        <div class="form-group">
+    	<label for="inputtitle" class="col-sm-5 control-label">name</label>
+    	<div class="col-sm-3">
+    
+    <input type="text"  value ="<?php echo $name;?>" name="name">
+        </div>
+        </div>
+
+
+        	 <div class="form-group">
+    	<label for="inputtitle" class="col-sm-5 control-label">email</label>
+    	<div class="col-sm-3">
+    	
+    		<input type="text"  value="<?php echo $email;?>" name="email">
+        </div>
+        </div>
+
+         <div class="form-group">
+    	<label for="inputtitle" class="col-sm-5 control-label">password</label>
+    	<div class="col-sm-3">
+    	
+    	<input type="text" value="<?php echo $password;?>" name="password" >
+        </div>
+        </div>
+
+        <div class="form-group">
+    	<label for="inputtitle" class="col-sm-5 control-label">mobile </label>
+    	<div class="col-sm-3">
+    	
+    		<input type="text" value="<?php echo $mobile;?>" name="mobile">
+        </div>
+        </div>
+            
+
+           <div class="form-group">
+        	<div class="col-md-9 col-md-offset-4">
+<button type="submit" name="sub" class="btn btn-sm btn-primary"><i class="fa fa-bookmark-o"></i>             save</button>
+<button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Cancel</button>
+</div>
+            </div>
+            
+        </form>
+
+</body>
+</html>
